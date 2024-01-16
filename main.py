@@ -6,9 +6,9 @@ import numpy as np
 import random
 
 
-UPLOAD_FOLDER = 'static/upload/'  # Corrected path
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # Added quotes
-
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'} 
+current_directory = os.getcwd()
+UPLOAD_FOLDER = os.path.join(current_directory, 'static/upload/')
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -58,6 +58,8 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+ 
+
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('home', filename=filename))
 
