@@ -8,12 +8,11 @@ from io import BytesIO
 from base64 import b64encode
 
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'} 
-current_directory = os.getcwd()
-UPLOAD_FOLDER = os.path.join(current_directory, 'static/upload/')
+
+
 app = Flask(__name__)
 app.secret_key="ahoifdiehjfijedfj"
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 
 def rgb_to_hex(rgb):
@@ -25,10 +24,6 @@ def calculate_intensity(color):
     g = int(color[3:5], 16)
     b = int(color[5:7], 16)
     return (r + g + b) / 3
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/',  methods=['GET', 'POST'])
 def home():
